@@ -16,7 +16,7 @@
 
 <script>
   import { fade } from 'svelte/transition';
-  
+
   let checked = localStorage.checkedDisclaimer !== undefined;
 
   function closeDisclaimer ()  {
@@ -27,12 +27,13 @@
 
 <style>
   .disclaimer {
+    background-color: var(--main-background);
+    z-index: 1;
     width: 100vw;
     height: 100vh;
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #fafafa;
     display: flex;
     align-items: center;
   }
@@ -45,15 +46,16 @@
   }
 
   .disclaimer__header {
+    color: var(--ancent-color-light);
     margin: 0;
     padding: 10px 0;
-    text-shadow: 1px 1px 1px #d8d8d8;
+    text-shadow: 1px 1px 1px var(--text-shadow-color);
   }
 
   .disclaimer__description {
     font-size: 1.1em;
-    color: #323232;
-    text-shadow: 1px 1px 1px #d8d8d8;
+    color: var(--ancent-color-light);
+    text-shadow: 1px 1px 1px var(--text-shadow-color);
   }
 
   .disclaimer__continue {
@@ -65,7 +67,7 @@
     margin-top: 15px;
     border: none;
     background-color: transparent;
-    color: #353535;
+    color: var(--ancent-color-light);
   }
 
   .disclaimer__continue:active {
@@ -73,6 +75,6 @@
   }
 
   .disclaimer__continue:hover {
-    color: #000000;
+    color: var(--ancent-color-dark);
   }
 </style>

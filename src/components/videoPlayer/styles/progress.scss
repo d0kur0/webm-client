@@ -1,6 +1,6 @@
 $track-w: 100%;
 $track-h: .25em;
-$thumb-d: 1.0em;
+$thumb-d: 0.8em;
 $track-c: rgba(173, 173, 173, 0.5);
 $filll-c: #e2e2e2;
 
@@ -12,7 +12,7 @@ $filll-c: #e2e2e2;
   background: $track-c;
 
   @if $fill == 1 {
-    .js & {
+    .progress-hack & {
       background: linear-gradient($filll-c, $filll-c)
       0/ var(--sx) 100% no-repeat $track-c
     }

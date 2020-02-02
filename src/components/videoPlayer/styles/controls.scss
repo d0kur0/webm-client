@@ -1,0 +1,67 @@
+.controls {
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 1) 100%);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  transition: opacity 1s;
+  padding: 15px 10px;
+
+  &-progress {
+    padding: 10px;
+  }
+
+  .elements {
+    display: flex;
+    align-items: center;
+    margin: 0 -10px;
+    padding: 0 10px;
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: center;
+      margin: 0 10px;
+      color: #fff;
+    }
+
+    .time {
+      font-size: 0.9em;
+    }
+
+    .divider {
+      flex: 1 1 0;
+    }
+
+    .sound {
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.5);
+        border-radius: 50px;
+        width: auto;
+
+        &::after {
+          box-shadow: none;
+          border-radius: 0;
+          background-color: transparent;
+        }
+
+        input {
+          position: static;
+          clip: unset;
+          width: 50px;
+          height: auto;
+          margin: 0 10px 0 0;
+        }
+      }
+
+      input {
+        transition: 0.3s;
+        position: absolute;
+        clip: rect(0 0 0 0);
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+      }
+    }
+  }
+}
