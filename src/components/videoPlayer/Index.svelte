@@ -1,7 +1,7 @@
 <svelte:body on:widescreen={onWideScreen}/>
 
 <template>
-  <div class="player" bind:this={player}>
+  <div class="player progress-hack" bind:this={player}>
     <div class="player-container" on:mousemove={handleMouseMove} class:player-wide={isWide || isFullScreen}>
       <video
               src="https://2ch.hk/b/src/212736581/15806420021410.mp4"
@@ -13,7 +13,7 @@
       ></video>
 
       <div class="controls" style="opacity: {duration && showControls ? 1 : 0}">
-        <div class="controls-progress progress-hack">
+        <div class="controls-progress">
           <input
                   step="any"
                   on:input={handleProgressChange}
@@ -34,13 +34,14 @@
           </li>
           <li class="time">{format(time)} / {format(duration)}</li>
           <li class="divider"></li>
-          <li class="sound progress-hack">
+          <li class="sound">
             <input
                     on:input={handleInputVolume}
                     value={volume}
                     type="range"
                     min="0"
                     max="1"
+                    style="--min: 0; --max: 1; --val: {volume}"
                     step="any">
             <button
                     on:click={handleDisableSound}
