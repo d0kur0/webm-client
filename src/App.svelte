@@ -2,7 +2,7 @@
 	import Disclaimer from "./components/Disclaimer.svelte";
 	import VideoArea from "./components/VideoArea.svelte";
 	import ThemeToggler from "./components/ThemeToggler.svelte";
-	import Settings from "./components/Settings.svelte";
+	import Settings from "./components/settings/Index.svelte";
 	import WideScreen from "./components/WideScreen.svelte"
 </script>
 

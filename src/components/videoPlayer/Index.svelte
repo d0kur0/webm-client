@@ -2,7 +2,12 @@
 
 <template>
   <div class="player progress-hack" bind:this={player}>
-    <div class="player-container" on:mousemove={handleMouseMove} class:player-wide={isWide || isFullScreen}>
+    <div
+            tabindex="0"
+            class="player-container"
+            on:mousemove={handleVisibilityControls}
+            on:keydown={e => handleHotKeysOnContainer(e) + handleVisibilityControls(e)}
+            class:player-wide={isWide || isFullScreen}>
       <video
               src="https://2ch.hk/b/src/212736581/15806420021410.mp4"
               on:click={handlePlayPause}
@@ -86,14 +91,46 @@
     volume = localStorage.volume || volume;
   });
 
-  const handleInputVolume = e => {
-    volume = +e.target.value;
+  const updateVolume = (newVolume) => {
+    volume = newVolume;
     localStorage.volume = volume;
   };
+
+  const handleInputVolume = e => updateVolume(+e.target.value);
 
   const handleDisableSound = e => {
     isDisableVolume = !isDisableVolume;
     volume = isDisableVolume ? 0 : localStorage.volume;
+  };
+
+  const handleHotKeysOnContainer = e => {
+    if (!e.target.classList.contains("player-container")) return;
+
+    switch (e.which) {
+      case 39:
+        time += 5;
+        break;
+      case 37:
+        time -= 5;
+        break;
+      case 32:
+        paused = !paused;
+        break;
+      case 38:
+        if (volume === 1 || (volume < 1 && volume > 0.9)) {
+          updateVolume(1)
+        } else {
+          updateVolume(volume + 0.1)
+        }
+        break;
+      case 40:
+        if (volume < 0.1) {
+          updateVolume(0)
+        } else {
+          updateVolume(volume - 0.1)
+        }
+        break;
+    }
   };
 
   const handleFullScreen = () => {
@@ -105,9 +142,13 @@
 
   const handleProgressChange = e => time = +e.target.value;
 
-  const handlePlayPause = () => paused = !paused;
+  const handlePlayPause = e => {
+    e.stopPropagation();
+    paused = !paused;
+    console.log("play pause");
+  };
 
-  const handleMouseMove = e => {
+  const handleVisibilityControls = e => {
       clearTimeout(showControlsTimeout);
       showControlsTimeout = setTimeout(() => showControls = false, 2500);
       showControls = true;

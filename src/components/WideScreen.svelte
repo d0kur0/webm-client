@@ -1,6 +1,8 @@
-<button on:click={wideScreen} class="reset-button">
-    Wide Screen
-</button>
+<template>
+    <button on:click={wideScreen} class="reset-button">
+        {isWide ? "Свернуть окно видео" : "Растянуть окно видео"}
+    </button>
+</template>
 
 <script>
     import { onMount } from "svelte";
