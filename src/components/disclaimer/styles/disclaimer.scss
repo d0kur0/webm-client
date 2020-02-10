@@ -1,0 +1,51 @@
+.container {
+  background-color: var(--main-background);
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+
+  .content {
+    max-width: 600px;
+    width: 100%;
+    padding: 0 15px;
+    margin: auto;
+  }
+
+  .header {
+    color: var(--ancent-color-light);
+    margin: 0;
+    padding: 10px 0;
+    text-shadow: 1px 1px 1px var(--text-shadow-color);
+  }
+
+  .description {
+    font-size: 1.1em;
+    color: var(--ancent-color-light);
+    text-shadow: 1px 1px 1px var(--text-shadow-color);
+  }
+
+  .continue-button {
+    font: inherit;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 1px 0;
+    margin: 0;
+    margin-top: 15px;
+    border: none;
+    background-color: transparent;
+    color: var(--ancent-color-light);
+
+    &:active {
+      background-color: transparent;
+    }
+
+    &:hover {
+      color: var(--ancent-color-dark);
+    }
+  }
+}
