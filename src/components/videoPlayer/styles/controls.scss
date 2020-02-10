@@ -2,9 +2,12 @@
   background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 1) 100%);
   position: absolute;
   bottom: 0;
-  width: 100%;
   transition: opacity 1s;
   padding: 15px 10px;
+
+  width: 0;
+  height: 0;
+  overflow: hidden;
 
   &-progress {
     padding: 10px;
@@ -64,4 +67,10 @@
       }
     }
   }
+}
+
+.controls-visible {
+  width: 100%;
+  height: auto;
+  overflow: unset;
 }
