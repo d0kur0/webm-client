@@ -1,189 +1,45 @@
-<svelte:body on:widescreen={onWideScreen}/>
-
 <template>
-  <div class="player progress-hack" bind:this={player}>
+  <div class="player" bind:this={$UI.playerContainer}>
     <div
             tabindex="0"
             class="player-container"
-            on:mousemove={handleVisibilityControls}
-            on:keydown={e => handleHotKeysOnContainer(e) + handleVisibilityControls(e)}
-            class:player-wide={isWide || isFullScreen}>
+            class:player-wide={$UI.isWide || $UI.isFullScreen}
+            on:mousemove={UI.toggleControls}
+            on:keydown={(event) => handleHotKeysOnContainer(event) + UI.toggleControls()}>
       <video
-              src="https://2ch.hk/b/src/212736581/15806420021410.mp4"
-              on:click={handlePlayPause}
-              bind:currentTime={time}
-              bind:duration
-              bind:paused
-              bind:volume
-      ></video>
+              src="https://2ch.hk/b/src/213126903/15810662809650.mp4"
+              on:click={paused.toggle}
+              bind:paused={$paused}
+              bind:volume={$volume.value}
+              bind:duration={$duration}
+              bind:currentTime={$time}
+      >
+      </video>
 
-      <div class="controls" style="opacity: {duration && showControls ? 1 : 0}">
-        <div class="controls-progress">
-          <input
-                  step="any"
-                  on:input={handleProgressChange}
-                  style="--min: 0; --max: {duration}; --val: {time}"
-                  type="range"
-                  min="0"
-                  max="{duration}"
-                  value="{time}">
-        </div>
-
-        <ul class="elements">
-          <li>
-            <button
-                    on:click={handlePlayPause}
-                    title={paused ? 'Начать просмотр' : 'Пауза'}
-                    class={paused ? "button button-play" : "button button-pause"}
-            ></button>
-          </li>
-          <li class="time">{format(time)} / {format(duration)}</li>
-          <li class="divider"></li>
-          <li class="sound">
-            <input
-                    on:input={handleInputVolume}
-                    value={volume}
-                    type="range"
-                    min="0"
-                    max="1"
-                    style="--min: 0; --max: 1; --val: {volume}"
-                    step="any">
-            <button
-                    on:click={handleDisableSound}
-                    class="controls-sound button button-sound"
-                    class:button-sound-disable={volume === 0}
-                    title="Изменить громкость"></button>
-          </li>
-          <li>
-            <button
-                    on:click={handleFullScreen}
-                    class="button button-fullScreen"
-                    title={isFullScreen ? "Выйти из полноэкранного режима" : "Развернуть на весь экран"}></button>
-          </li>
-          <li>
-            <button
-                    class="button button-other"
-                    title="Дополнительные возможности"></button>
-          </li>
-        </ul>
-      </div>
+      <Controls />
     </div>
   </div>
 </template>
 
 <script>
-  import { onMount } from "svelte"
+  import Controls from "./Controls.svelte";
+  import { time, paused, duration, volume, UI } from "../../stores/player";
 
-  let time = 0;
-  let duration;
-  let paused = true;
-  let isWide = false;
-  let volume = 0.5;
-  let isDisableVolume = false;
-
-  let player;
-  let isFullScreen = false;
-
-  let showControls = true;
-  let showControlsTimeout;
-
-  onMount(() => {
-    volume = localStorage.volume || volume;
+  document.addEventListener("fullscreenchange", function () {
+    $UI.isFullScreen = Boolean(document.fullscreenElement);
   });
 
-  const updateVolume = (newVolume) => {
-    volume = newVolume;
-    localStorage.volume = volume;
-  };
+  function handleHotKeysOnContainer (event) {
+    if (!event.target.classList.contains("player-container")) return;
 
-  const handleInputVolume = e => updateVolume(+e.target.value);
-
-  const handleDisableSound = e => {
-    isDisableVolume = !isDisableVolume;
-    volume = isDisableVolume ? 0 : localStorage.volume;
-  };
-
-  const handleHotKeysOnContainer = e => {
-    if (!e.target.classList.contains("player-container")) return;
-
-    switch (e.which) {
-      case 39:
-        time += 5;
-        break;
-      case 37:
-        time -= 5;
-        break;
-      case 32:
-        paused = !paused;
-        break;
-      case 38:
-        if (volume === 1 || (volume < 1 && volume > 0.9)) {
-          updateVolume(1)
-        } else {
-          updateVolume(volume + 0.1)
-        }
-        break;
-      case 40:
-        if (volume < 0.1) {
-          updateVolume(0)
-        } else {
-          updateVolume(volume - 0.1)
-        }
-        break;
-    }
-  };
-
-  const handleFullScreen = () => {
-    isFullScreen ? document.exitFullscreen() : player.requestFullscreen();
-    isFullScreen = !isFullScreen;
-  };
-
-  const onWideScreen = e => isWide = e.detail;
-
-  const handleProgressChange = e => time = +e.target.value;
-
-  const handlePlayPause = e => {
-    e.stopPropagation();
-    paused = !paused;
-    console.log("play pause");
-  };
-
-  const handleVisibilityControls = e => {
-      clearTimeout(showControlsTimeout);
-      showControlsTimeout = setTimeout(() => showControls = false, 2500);
-      showControls = true;
-  };
-
-  const handleMousedown = e => {
-      function handleMouseup() {
-          if (paused) e.target.play();
-          else e.target.pause();
-          cancel();
-      }
-
-      function cancel() {
-          e.target.removeEventListener('mouseup', handleMouseup);
-      }
-
-      e.target.addEventListener('mouseup', handleMouseup);
-
-      setTimeout(cancel, 200);
-  };
-
-  const format = seconds => {
-      if (isNaN(seconds)) return '...';
-
-      const minutes = Math.floor(seconds / 60);
-      seconds = Math.floor(seconds % 60);
-      if (seconds < 10) seconds = '0' + seconds;
-
-      return `${minutes}:${seconds}`;
-  };
+    (event.which === 39) && time.rewindRight();
+    (event.which === 37) && time.rewindLeft();
+    (event.which === 32) && paused.toggle();
+    (event.which === 38) && volume.increment();
+    (event.which === 40) && volume.decrement();
+  }
 </script>
 
 <style lang="scss">
   @import "./styles/player.scss";
-  @import "./styles/progress.scss";
-  @import "./styles/controls.scss";
-  @import "./styles/controlsButton.scss";
 </style>
