@@ -46,9 +46,7 @@
 
 <script>
 	let isNight = localStorage.isNightTheme !== undefined;
-	if (isNight) {
-		document.body.classList.add('dark-theme');
-	}
+	if (isNight) document.body.classList.add('dark-theme');
 
 	function toggle () {
 		isNight = !isNight;
