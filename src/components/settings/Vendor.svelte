@@ -1,16 +1,15 @@
 <template>
 	<div class="vendor">
 		<label class="name checkbox">
-			<input on:change={toggle} type="checkbox" name="vendors[]">
+			<input checked="{!expanded ? 'checked' : ''}" on:change={() => toggleVendor(vendor)} type="checkbox">
 			<span>{vendor}</span>
 		</label>
 
 		<ul class="boards" class:expanded>
-
-			{#each boards as { name, description }}
+			{#each boards as { name, description, disabled }}
 				<li>
 					<label class="checkbox">
-						<input type="checkbox" name="boards[{vendor}][]">
+							<input checked="{disabled ? 'checked' : ''}" on:change={() => toggleBoard(vendor, name)} type="checkbox">
 						<span class="name">
 							{name} <span class="description">({description})</span>
 						</span>
@@ -23,12 +22,14 @@
 
 <script>
 	export let vendor;
-	export let expanded = false;
 	export let boards;
+	export let expanded;
 
-	console.log(expanded)
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
 
-	const toggle = () => expanded = !expanded;
+	const toggleVendor = (vendor) => dispatch("toggleVendor", vendor);
+	const toggleBoard = (vendor, board) => dispatch("toggleBoard", { vendor, board });
 </script>
 
 <style lang="scss">
