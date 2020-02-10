@@ -6,22 +6,19 @@
 
 <script>
     import { onMount } from "svelte";
+    import { UI } from "../../stores/player";
 
     let isWide = localStorage.wideScreen !== undefined;
 
-    const dispatchEvent = () => {
-        const event = new CustomEvent("widescreen", { detail: isWide });
-        document.body.dispatchEvent(event);
-    };
-
     const wideScreen = () => {
         isWide = !isWide;
+
         isWide
             ? localStorage.setItem("wideScreen", "true")
             : localStorage.removeItem("wideScreen");
 
-        dispatchEvent();
+        $UI.isWide = isWide;
     };
 
-    onMount(() => dispatchEvent());
+    onMount(() => $UI.isWide = isWide);
 </script>
