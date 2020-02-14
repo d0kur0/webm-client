@@ -82,5 +82,5 @@
 <style lang="scss">
 	@import "./styles/controls.scss";
 	@import "./styles/controlsButton.scss";
-	@import "./styles/progress.scss";
+	@import "src/components/videoPlayer/styles/progress";
 </style>

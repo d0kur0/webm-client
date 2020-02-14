@@ -1,36 +1,45 @@
 <template>
-  {#if !checked}
-  <div class="container" transition:fade>
-    <div class="content">
-      <h1 class="header">Обратите внимание</h1>
+  <Overlay>
+    <Container maxWidth="700px" alignItems="center" justifyContent="center" fill>
+      <div class="theme-toggler">
+        <ThemeToggler />
+      </div>
 
-      <p class="description">
-        Весь контент на данном ресурсе взят с таких сайтов как: <a href="https://2ch.hk">2ch.hk</a>, <a href="https://4chan.org">4chan.org</a> и принадлежит его пользователям.
-      </p>
+      <Heading size="1">Обратите внимание</Heading>
 
-      <p class="description">
+      <Paragraph>
+        Весь контент на данном ресурсе взят с таких сайтов как: <Link href="https://2ch.hk">2ch.hk</Link>, <Link href="https://4chan.org">4chan.org</Link> и принадлежит его пользователям.
+      </Paragraph>
+
+      <Paragraph>
         Некоторые из "досок" могут содержать в себе файлы для взрослых, рачленёнку и тому подобное.
-        Хоть показываемые доски и можно настроить, это не исключает возможности просмотра возможно не самого приятного контента.
-      </p>
-      <p class="description">
+        Хоть показываемые доски и можно настроить, это не исключает возможности просмотра не самого приятного контента.
+      </Paragraph>
+
+      <Paragraph>
         Если вам нет 18 лет или если вы слишком впечатлителен, то вам стоит покинуть сайт.
-      </p>
+      </Paragraph>
 
       <button on:click={closeDisclaimer} class="continue-button">Перейти к сайту →</button>
-    </div>
-  </div>
-  {/if}
+    </Container>
+  </Overlay>
 </template>
 
 <script>
-  import { fade } from 'svelte/transition';
+  import Overlay from "../../ui-elements/Overlay.svelte";
+  import Container from "../../ui-elements/Container.svelte";
+  import Paragraph from "../../ui-elements/Paragraph.svelte";
+  import Heading from "../../ui-elements/Heading.svelte";
+  import Link from "../../ui-elements/Link.svelte";
 
-  let checked = localStorage.checkedDisclaimer !== undefined;
+  import { fade } from 'svelte/transition';
+  import ThemeToggler from '../themeToggler/Index.svelte';
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
 
   function closeDisclaimer ()  {
     localStorage.checkedDisclaimer = true;
-    checked = true;
+    dispatch("confirm");
   }
 </script>
-
-<style src="./styles/disclaimer.scss"></style>

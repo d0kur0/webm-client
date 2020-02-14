@@ -1,10 +1,10 @@
 .modal-window {
   position: absolute;
-  clip: rect(0 0 0 0);
-  width: 1px;
-  height: 1px;
-  margin: -1px;
+  top: 0;
+  left: 0;
+  display: none;
   color: var(--ancent-color);
+  background-color: var(--main-background);
 
   .reset-button {
     position: absolute;
@@ -40,13 +40,9 @@
 }
 
 .modal-window-visibly {
-  clip: unset;
-  top: 0;
-  left: 0;
   width: 100vw;
   min-height: 100vh;
-  margin: auto;
-  background-color: var(--main-background);
+  display: block;
   z-index: 10;
 
   .container {

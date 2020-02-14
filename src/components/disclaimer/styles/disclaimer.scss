@@ -9,6 +9,12 @@
   display: flex;
   align-items: center;
 
+  .theme-toggler {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
   .content {
     max-width: 600px;
     width: 100%;

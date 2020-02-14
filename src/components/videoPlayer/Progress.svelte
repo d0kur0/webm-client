@@ -16,5 +16,5 @@
 </script>
 
 <style lang="scss">
-	@import "./styles/progress.scss";
+	@import "src/components/videoPlayer/styles/progress";
 </style>
