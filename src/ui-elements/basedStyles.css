@@ -1,0 +1,30 @@
+:global(*) {
+	box-sizing: border-box;
+}
+
+:global(body) {
+	margin: auto;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+:global(body) {
+	--main-background: #fafafa;
+	--main-background-dark: #343434;
+
+	--ancent-color: #1a1a1a;
+	--ancent-color-light: #353535;
+	--ancent-color-dark: #000;
+
+	--text-shadow-color: #d8d8d8;
+}
+
+:global(body.dark-theme) {
+	--main-background: #151515;
+	--main-background-dark: #010101;
+
+	--ancent-color: #d7d7d7;
+	--ancent-color-light: #adadad;
+	--ancent-color-dark: #989898;
+
+	--text-shadow-color: #5c5c5c;
+}
