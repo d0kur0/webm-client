@@ -8,6 +8,8 @@
 }
 
 :global(body) {
+	--focused-color: cornflowerblue;
+
 	--main-background: #fafafa;
 	--main-background-dark: #343434;
 
@@ -19,6 +21,8 @@
 }
 
 :global(body.dark-theme) {
+	--focused-color: cornflowerblue;
+
 	--main-background: #151515;
 	--main-background-dark: #010101;
 

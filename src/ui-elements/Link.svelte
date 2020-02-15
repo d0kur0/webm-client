@@ -6,6 +6,7 @@
 	a {
 		color: var(--ancent-color);
 		text-decoration: none;
+		border-bottom: 2px solid transparent;
 	}
 
 	a:visited {
@@ -15,6 +16,6 @@
 	a:focus {
 		outline: none;
 		color: var(--ancent-color-light);
-		text-decoration: underline;
+		border-color: var(--focused-color);
 	}
 </style>
