@@ -20,7 +20,9 @@
         Если вам нет 18 лет или если вы слишком впечатлителен, то вам стоит покинуть сайт.
       </Paragraph>
 
-      <button on:click={closeDisclaimer} class="continue-button">Перейти к сайту →</button>
+      <Margin top="25px">
+        <Button on:click={() => alert(1)}>Перейти к сайту →</Button>
+      </Margin>
     </Container>
   </Overlay>
 </template>
@@ -30,6 +32,8 @@
   import Container from "../../ui-elements/Container.svelte";
   import Paragraph from "../../ui-elements/Paragraph.svelte";
   import Heading from "../../ui-elements/Heading.svelte";
+  import Button from "../../ui-elements/Button.svelte";
+  import Margin from "../../ui-elements/Margin.svelte";
   import Link from "../../ui-elements/Link.svelte";
 
   import { fade } from 'svelte/transition';
@@ -43,3 +47,11 @@
     dispatch("confirm");
   }
 </script>
+
+<style>
+  .theme-toggler {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+</style>
