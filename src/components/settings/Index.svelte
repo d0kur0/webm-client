@@ -1,17 +1,19 @@
 <svelte:body on:keydown={handleEscapeKey}></svelte:body>
 
 <template>
-	<button on:click={showModalWindow} class="reset-button">
+	<Button transparent on:click={showModalWindow}>
 		Настройки
-	</button>
+	</Button>
 
-	<div class="modal-window" class:modal-window-visibly={isOpen}>
-		<button on:click={hideModalWindow} class="reset-button">
-			<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path style="fill: var(--ancent-color)" d="M77.6 21.1l-28 28.1-28.1-28.1-1.9 1.9 28 28.1-28 28.1 1.9 1.9L49.6 53l28 28.1 2-1.9-28.1-28.1L79.6 23z"/></svg>
-		</button>
+	<Overlay>
+		<span class="close-button">
+			<Button transparent rounded>
+				<Icon size="20px" name="cancel" />
+			</Button>
+		</span>
 
-		<div class="container">
-			<h2>Настройка схемы граббера</h2>
+		<Container>
+			<Heading size="2">Настройка схемы граббера</Heading>
 
 			{#if schema}
 				{#each schema as { vendor, boards, expanded }}
@@ -25,11 +27,17 @@
 			{:else}
 				Загрузка данных...
 			{/if}
-		</div>
-	</div>
+		</Container>
+	</Overlay>
 </template>
 
 <script>
+	import Icon from "../../ui-elements/Icon.svelte";
+	import Button from "../../ui-elements/Button.svelte";
+	import Overlay from "../../ui-elements/Overlay.svelte";
+	import Container from "../../ui-elements/Container.svelte";
+	import Heading from "../../ui-elements/Heading.svelte";
+
 	import Vendor from "./Vendor.svelte";
 	import { onMount } from "svelte";
 	import { getSchema } from "../../api";
@@ -108,6 +116,10 @@
 	});
 </script>
 
-<style lang="scss">
-	@import "./styles/modalWindow.scss";
+<style>
+	.close-button {
+		position: absolute;
+		top: 20px;
+		right: 20px;
+	}
 </style>

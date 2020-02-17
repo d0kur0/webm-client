@@ -1,5 +1,5 @@
 <template>
-  <Overlay>
+  <Overlay bind:this={overlayElement}>
     <Container maxWidth="700px" alignItems="center" justifyContent="center" fill>
       <div class="theme-toggler">
         <ThemeToggler />
@@ -21,7 +21,7 @@
       </Paragraph>
 
       <Margin top="25px">
-        <Button on:click={() => alert(1)}>Перейти к сайту →</Button>
+        <Button transparent on:click={closeDisclaimer}>Перейти к сайту →</Button>
       </Margin>
     </Container>
   </Overlay>
@@ -38,13 +38,11 @@
 
   import { fade } from 'svelte/transition';
   import ThemeToggler from '../themeToggler/Index.svelte';
-  import { createEventDispatcher } from 'svelte';
 
-  const dispatch = createEventDispatcher();
-
+  let overlayElement;
   function closeDisclaimer ()  {
     localStorage.checkedDisclaimer = true;
-    dispatch("confirm");
+    overlayElement && overlayElement.$destroy();
   }
 </script>
 

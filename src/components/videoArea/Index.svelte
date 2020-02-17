@@ -1,15 +1,48 @@
-<svelte:body on:updateFiles={handleUpdateFiles}></svelte:body>
+<template>
+	<div class="page-wrapper">
+		<header>
+			<div class="padding">
+				<Settings />
+			</div>
 
-<div class="video-area">
-	<VideoPlayer
-					on:error={() => removeBadVideo() + nextVideo() }
-					on:ended={nextVideo}
-					on:previous={previousVideo}
-					on:next={nextVideo}
-					{video} />
-</div>
+			<div class="padding">
+				<WideScreen />
+			</div>
+
+			<div class="pull-right">
+				<ThemeToggler />
+			</div>
+		</header>
+
+		<main>
+			<div class="video-area">
+				<VideoPlayer {video} />
+			</div>
+		</main>
+	</div>
+</template>
 
 <style>
+	header {
+		padding: 0 20px;
+		height: 80px;
+		display: flex;
+		align-items: center;
+	}
+
+
+	.pull-right {
+		margin-left: auto;
+	}
+
+	main {
+		min-height: calc(100vh - 80px);
+	}
+
+	.page-wrapper {
+		background-color: var(--main-background);
+	}
+
 	.video-area {
 		width: 100%;
 		height: 100%;
@@ -20,41 +53,21 @@
 
 <script>
 	import VideoPlayer from "../videoPlayer/Index.svelte";
+	import ThemeToggler from "../themeToggler/Index.svelte";
+	import WideScreen from "../wideScreen/Index.svelte";
+	import Settings from "../settings/Index.svelte";
+
 	import { getLocalSchema } from "../../utils/localSchema";
 	import { onMount } from "svelte"
 	import { getFilesByStruct } from "../../api";
 
-	let cursor = 0;
 	let files = [];
 	let video;
-
-	const removeBadVideo = () => {
-		files = files.splice(cursor - 1, 1);
-		console.log('remove');
-	};
-
-	const previousVideo = () => {
-		if (cursor - 1 >= 0) {
-			cursor -= 1;
-			video = files[cursor];
-		}
-	};
-
-	const nextVideo = () => {
-		console.log('next');
-		if (cursor + 1 <= files.length) {
-			cursor += 1;
-			video = files[cursor];
-			console.log('next 2', cursor, video);
-		}
-	};
 
 	const fetchFiles = async () => {
 		files = await getFilesByStruct(getLocalSchema());
 		video = files.shift();
 	};
-
-	const handleUpdateFiles = async () => await fetchFiles();
 
 	onMount(async () => await fetchFiles());
 </script>

@@ -1,10 +1,11 @@
 <template>
-    <button on:click={wideScreen} class="reset-button">
+    <Button on:click={wideScreen} transparent>
         {isWide ? "Свернуть окно видео" : "Растянуть окно видео"}
-    </button>
+    </Button>
 </template>
 
 <script>
+    import Button from "../../ui-elements/Button.svelte";
     import { onMount } from "svelte";
     import { UI } from "../../stores/player";
 

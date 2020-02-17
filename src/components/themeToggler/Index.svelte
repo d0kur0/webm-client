@@ -1,5 +1,5 @@
-<Button aria-label="Изменить тему сайта" on:click={toggle}>
-	<Icon size="" iconName="{isNight ? `sun` : `moon`}" />
+<Button transparent rounded ariaLabel="Изменить тему сайта" on:click={toggle}>
+	<Icon size="20px" name="{isNight ? `sun` : `moon`}" />
 </Button>
 
 <script>
@@ -9,8 +9,23 @@
 	let isNight = localStorage.isNightTheme !== undefined;
 	if (isNight) document.body.classList.add('dark-theme');
 
+	let timeout;
+
 	function toggle () {
 		isNight = !isNight;
+
+		if (!timeout) {
+			document.body.classList.add("transition");
+
+			const TRANSITION_TIME = 1000;
+			const clearTransition = () => {
+				console.log("clear");
+				document.body.classList.remove("transition");
+				timeout = clearTimeout(timeout);
+			};
+
+			timeout = setTimeout(clearTransition, TRANSITION_TIME);
+		}
 
 		if (isNight) {
 			localStorage.setItem("isNightTheme", "true");
