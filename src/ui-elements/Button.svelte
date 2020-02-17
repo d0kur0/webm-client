@@ -1,11 +1,11 @@
 <script>
-	export let type;
 	export let rounded = false;
-	export let transparent;
+	export let transparent = false;
+	export let ariaLabel = "";
 </script>
 
 <template>
-	<button on:click on:focus><slot/></button>
+	<button aria-label="{ariaLabel}" class:rounded class:transparent on:click on:focus><slot/></button>
 </template>
 
 <style>
@@ -27,6 +27,31 @@
 
 	button:focus {
 		outline: none;
+		border-color: var(--focused-color);
+	}
+
+	.transparent {
+		padding: 7px 0;
+		background-color: transparent;
+		color: var(--ancent-color);
+	}
+
+	.transparent:focus {
+		border-color: transparent;
+		border-bottom-color: var(--focused-color);
+	}
+
+	.rounded {
+		border-radius: 50%;
+		padding: 0;
+		height: 50px;
+		width: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.rounded:focus {
 		border-color: var(--focused-color);
 	}
 </style>

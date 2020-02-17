@@ -2,6 +2,14 @@
 	box-sizing: border-box;
 }
 
+:global(.transition) {
+	transition: 0.5s;
+}
+
+:global(.transition *) {
+	transition: 0.5s;
+}
+
 :global(body) {
 	margin: auto;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;

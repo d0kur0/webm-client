@@ -2,7 +2,7 @@
 	export let alignItems = "normal";
 	export let justifyContent = "normal";
 	export let maxWidth = "1200px";
-	export let fill;
+	export let fill = false;
 </script>
 
 <template>
