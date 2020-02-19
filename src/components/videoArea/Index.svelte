@@ -1,7 +1,7 @@
 <template>
 	<div class="page-wrapper">
 		<header>
-			<div class="padding">
+			<div style="padding-right: 15px;">
 				<Settings />
 			</div>
 
@@ -36,7 +36,7 @@
 	}
 
 	main {
-		min-height: calc(100vh - 80px);
+		height: calc(100vh - 80px);
 	}
 
 	.page-wrapper {

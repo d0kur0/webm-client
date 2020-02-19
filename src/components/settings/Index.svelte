@@ -1,17 +1,9 @@
-<svelte:body on:keydown={handleEscapeKey}></svelte:body>
-
 <template>
-	<Button transparent on:click={showModalWindow}>
+	<Button transparent on:click="{() => modalWindowState = true}">
 		Настройки
 	</Button>
 
-	<Overlay>
-		<span class="close-button">
-			<Button transparent rounded>
-				<Icon size="20px" name="cancel" />
-			</Button>
-		</span>
-
+	<ModalWindow open="{modalWindowState}">
 		<Container>
 			<Heading size="2">Настройка схемы граббера</Heading>
 
@@ -28,13 +20,13 @@
 				Загрузка данных...
 			{/if}
 		</Container>
-	</Overlay>
+	</ModalWindow>
 </template>
 
 <script>
 	import Icon from "../../ui-elements/Icon.svelte";
 	import Button from "../../ui-elements/Button.svelte";
-	import Overlay from "../../ui-elements/Overlay.svelte";
+	import ModalWindow from "../../ui-elements/ModalWindow.svelte";
 	import Container from "../../ui-elements/Container.svelte";
 	import Heading from "../../ui-elements/Heading.svelte";
 
@@ -43,35 +35,8 @@
 	import { getSchema } from "../../api";
 	import { getLocalSchema, saveLocalSchema, mergeSchemes } from "../../utils/localSchema";
 
-	let isOpen = false;
+	let modalWindowState = false;
 	let needUpdate = false;
-
-	const dispatchUpdateFiles = () => {
-		const event = new CustomEvent("updateFiles");
-		document.body.dispatchEvent(event);
-	};
-
-	const showModalWindow = () => isOpen = true;
-
-	const hideModalWindow = () => {
-		isOpen = false;
-
-		if (needUpdate) {
-			dispatchUpdateFiles();
-			needUpdate = false;
-		}
-	};
-
-	const handleEscapeKey = e => {
-		if (e.which === 27) {
-			hideModalWindow();
-
-			if (needUpdate) {
-				dispatchUpdateFiles();
-				needUpdate = false;
-			}
-		}
-	};
 
 	const handleToggleVendor = e => {
 		schema = schema.map(v => {
@@ -117,9 +82,5 @@
 </script>
 
 <style>
-	.close-button {
-		position: absolute;
-		top: 20px;
-		right: 20px;
-	}
+
 </style>
