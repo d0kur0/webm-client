@@ -36,6 +36,10 @@
 		color: var(--ancent-color);
 	}
 
+	.transparent:hover {
+		filter: invert(35%);
+	}
+
 	.transparent:focus {
 		border-color: transparent;
 		border-bottom-color: var(--focused-color);
