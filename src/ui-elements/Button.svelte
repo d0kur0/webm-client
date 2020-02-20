@@ -2,10 +2,11 @@
 	export let rounded = false;
 	export let transparent = false;
 	export let ariaLabel = "";
+	export let title = "";
 </script>
 
 <template>
-	<button aria-label="{ariaLabel}" class:rounded class:transparent on:click on:focus><slot/></button>
+	<button {title} aria-label="{ariaLabel}" class:rounded class:transparent on:click on:focus><slot/></button>
 </template>
 
 <style>

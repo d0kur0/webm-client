@@ -32,14 +32,12 @@
   function handleHotKeysOnContainer (event) {
     if (!event.target.classList.contains("player-container")) return;
 
-    (event.which === 39) && time.rewindRight();
-    (event.which === 37) && time.rewindLeft();
-    (event.which === 32) && paused.toggle();
-    (event.which === 38) && volume.increment();
-    (event.which === 40) && volume.decrement();
+    (event.code === "ArrowRight") && time.rewindRight();
+    (event.code === "ArrowLeft")  && time.rewindLeft();
+    (event.code === "Space")      && paused.toggle();
+    (event.code === "ArrowUp")    && volume.increment();
+    (event.code === "ArrowDown")  && volume.decrement();
   }
 </script>
 
-<style lang="scss">
-  @import "./styles/player.scss";
-</style>
+<style src="./styles/player.css"></style>

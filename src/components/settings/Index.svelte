@@ -3,18 +3,18 @@
 		Настройки
 	</Button>
 
-	<ModalWindow open="{modalWindowState}">
+	<ModalWindow open="{modalWindowState}" on:close="{handleModalWindowClose}">
 		<Container>
 			<Heading size="2">Настройка схемы граббера</Heading>
 
 			{#if schema}
 				{#each schema as { vendor, boards, expanded }}
 					<Vendor
-									on:toggleVendor={handleToggleVendor}
-									on:toggleBoard={handleToggleBoard}
-									{vendor}
-									{boards}
-									{expanded} />
+							on:toggleVendor={handleToggleVendor}
+							on:toggleBoard={handleToggleBoard}
+							{vendor}
+							{boards}
+							{expanded} />
 				{/each}
 			{:else}
 				Загрузка данных...
@@ -37,38 +37,46 @@
 
 	let modalWindowState = false;
 	let needUpdate = false;
+	let schema;
 
-	const handleToggleVendor = e => {
-		schema = schema.map(v => {
-			if (v.vendor === e.detail) v.expanded = !v.expanded;
+	function handleModalWindowClose () {
+		modalWindowState = false;
+	}
 
-			return v;
+	function handleToggleVendor (event) {
+		const vendor = event.detail;
+
+		schema = schema.map(schema => {
+			return {
+				...schema,
+				expanded: schema.vendor === vendor ? !schema.expanded : schema.expanded
+			}
 		});
 
 		needUpdate = true;
 		saveLocalSchema(schema);
-	};
+	}
 
-	const handleToggleBoard = e => {
-		const { vendor, board } = e.detail;
+	function handleToggleBoard (event) {
+		const { vendor, board } = event.detail;
 
-		schema = schema.map(v => {
-			if (v.vendor === vendor) {
-				v.boards = v.boards.map(b => {
-					if (b.name === board) b.disabled = !b.disabled;
-
-					return b;
+		schema = schema.map(schema => {
+			if (schema.vendor === vendor) {
+				schema.boards = schema.boards.map(schemaBoard => {
+					return {
+						...schemaBoard,
+						disabled: schemaBoard.name === board ? !schemaBoard.disabled : schemaBoard.disabled
+					};
 				});
 			}
 
-			return v;
+			return schema;
 		});
 
 		needUpdate = true;
 		saveLocalSchema(schema);
-	};
+	}
 
-	let schema;
 	onMount(async () => {
 		const serverSchema = await getSchema();
 		const localSchema = getLocalSchema();
@@ -80,7 +88,3 @@
 		(!localSchema) && saveLocalSchema(serverSchema);
 	});
 </script>
-
-<style>
-
-</style>

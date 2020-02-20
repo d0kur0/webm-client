@@ -1,32 +1,29 @@
 <template>
-	<div class="controls" class:controls-visible={$duration && $UI.showControls}>
+	<div class="controls-visible controls" class:controls-visible={$duration && $UI.showControls}>
+		<ul class="elements">
+			<li>
+				<Button transparent on:click={handlePreviousVideo} title="Предыдущее видео">
+					<Icon name="rewind" />
+				</Button>
+			</li>
+			<li>
+				<Button transparent on:click="{paused.toggle}" title="{$paused ? `Начать просмотр` : `Поставить на паузу`}">
+					<Icon name="{$paused ? `play` : `pause`}" />
+				</Button>
+			</li>
+			<li>
+				<Button transparent on:click={handleNextVideo} title="Следующее видео">
+					<Icon name="fast-fw" />
+				</Button>
+			</li>
+		</ul>
+
 		<div class="controls-progress">
 			<Progress  />
 		</div>
 
 		<ul class="elements">
-			<li>
-				<button
-						on:click={handlePreviousVideo}
-						title="Предыдущее видео"
-						class="button button-previous">
-				</button>
-			</li>
-			<li>
-				<button
-						on:click={paused.toggle}
-						title={$paused ? 'Начать просмотр' : 'Пауза'}
-						class={$paused ? "button button-play" : "button button-pause"}>
-				</button>
-			</li>
-			<li>
-				<button
-						on:click={handleNextVideo}
-						title="Следующее видео" class="button button-next">
-				</button>
-			</li>
 			<li class="time">{format($time)} / {format($duration)}</li>
-			<li class="divider"></li>
 			<li class="sound progress-hack">
 				<input
 						on:input={e => volume.input(+e.target.value)}
@@ -57,6 +54,8 @@
 </template>
 
 <script>
+	import Button from "../../ui-elements/Button.svelte";
+	import Icon from "../../ui-elements/Icon.svelte";
 	import Progress from "./Progress.svelte";
 	import { time, paused, duration, volume, UI } from "../../stores/player";
 
@@ -79,8 +78,4 @@
 	}
 </script>
 
-<style lang="scss">
-	@import "./styles/controls.scss";
-	@import "./styles/controlsButton.scss";
-	@import "src/components/videoPlayer/styles/progress";
-</style>
+<style src="./styles/controls.css"></style>

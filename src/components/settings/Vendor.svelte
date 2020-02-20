@@ -32,6 +32,55 @@
 	const toggleBoard = (vendor, board) => dispatch("toggleBoard", { vendor, board });
 </script>
 
-<style lang="scss">
-	@import "./styles/vendor.scss";
+<style>
+	.vendor {
+		user-select: none;
+		margin-top: 25px;
+	}
+
+	.vendor .checkbox {
+		cursor: pointer;
+		display: block;
+	}
+
+	.vendor .checkbox input {
+		display: none;
+	}
+
+	.vendor .checkbox span {
+		font-size: 1.1em;
+	}
+
+	.vendor .checkbox input:checked ~ span {
+		text-decoration: line-through;
+		color: var(--ancent-color-light);
+	}
+
+	.vendor .name {
+		padding: 10px 0;
+	}
+
+	.vendor .expanded {
+		height: auto !important;
+		overflow: unset !important;
+	}
+
+	.vendor .boards {
+		height: 0;
+		overflow: hidden;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.vendor .boards li {
+		padding: 0;
+		padding-left: 10px;
+		margin: 0 0 0 10px;
+		border-left: 1px solid var(--ancent-color-light);
+	}
+
+	.vendor .boards .name .description {
+		color: var(--ancent-color-light);
+	}
 </style>

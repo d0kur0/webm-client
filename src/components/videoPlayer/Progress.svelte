@@ -1,5 +1,5 @@
 <template>
-	<div class="progress-hack">
+	<div class="progress-hack" style="width: 100%">
 		<input
 				step="any"
 				on:input={e => time.set(+e.target.value)}
@@ -15,6 +15,4 @@
 	import { time, duration } from "../../stores/player";
 </script>
 
-<style lang="scss">
-	@import "src/components/videoPlayer/styles/progress";
-</style>
+<style src="./styles/progress.css"></style>
