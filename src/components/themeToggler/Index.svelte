@@ -19,7 +19,6 @@
 
 			const TRANSITION_TIME = 1000;
 			const clearTransition = () => {
-				console.log("clear");
 				document.body.classList.remove("transition");
 				timeout = clearTimeout(timeout);
 			};

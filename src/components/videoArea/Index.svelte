@@ -16,7 +16,7 @@
 
 		<main>
 			<div class="video-area">
-				<VideoPlayer {video} />
+				<VideoPlayer />
 			</div>
 		</main>
 	</div>
@@ -56,18 +56,4 @@
 	import ThemeToggler from "../themeToggler/Index.svelte";
 	import WideScreen from "../wideScreen/Index.svelte";
 	import Settings from "../settings/Index.svelte";
-
-	import { getLocalSchema } from "../../utils/localSchema";
-	import { onMount } from "svelte"
-	import { getFilesByStruct } from "../../api";
-
-	let files = [];
-	let video;
-
-	const fetchFiles = async () => {
-		files = await getFilesByStruct(getLocalSchema());
-		video = files.shift();
-	};
-
-	onMount(async () => await fetchFiles());
 </script>

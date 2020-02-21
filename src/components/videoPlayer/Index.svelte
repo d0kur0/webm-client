@@ -1,43 +1,60 @@
 <template>
-  <div class="player" bind:this={$UI.playerContainer}>
-    <div
-            tabindex="0"
-            class="player-container"
-            class:player-wide={$UI.isWide || $UI.isFullScreen}
-            on:mousemove={UI.toggleControls}
-            on:keydown={(event) => handleHotKeysOnContainer(event) + UI.toggleControls()}>
-      <video
-              src="https://2ch.hk/b/src/213126903/15810662809650.mp4"
-              on:click={paused.toggle}
-              bind:paused={$paused}
-              bind:volume={$volume.value}
-              bind:duration={$duration}
-              bind:currentTime={$time}
-      >
-      </video>
+	<div class="player" bind:this={$UI.playerContainer}>
+		<div
+				autofocus
+				tabindex="0"
+				class="player-container"
+				class:player-wide={$UI.isWide || $UI.isFullScreen}
+				on:mousemove={UI.toggleControls}
+				on:keydown={(event) => handleHotKeysOnContainer(event) + UI.toggleControls()}
+				on:mouseleave={() => $UI.showControls = false}>
 
-      <Controls />
-    </div>
-  </div>
+			{#if $videos.currentVideo}
+				<video
+						src="{$videos.currentVideo.path}"
+						autoplay="true"
+						on:click={paused.toggle}
+						bind:paused={$paused}
+						bind:volume={$volume.value}
+						bind:duration={$duration}
+						bind:currentTime={$time}
+						on:error={videos.next}
+				>
+				</video>
+			{/if}
+
+			<Controls />
+		</div>
+	</div>
 </template>
 
 <script>
-  import Controls from "./Controls.svelte";
-  import { time, paused, duration, volume, UI } from "../../stores/player";
+	import Controls from "./Controls.svelte";
+	import { time, paused, duration, volume, UI } from "../../stores/player";
+	import { videos } from "../../stores/videos";
+	import { getLocalSchema } from "../../utils/localSchema";
+	import { onMount } from "svelte"
+	import { getFilesByStruct } from "../../api";
 
-  document.addEventListener("fullscreenchange", function () {
-    $UI.isFullScreen = Boolean(document.fullscreenElement);
-  });
+	document.addEventListener("fullscreenchange", function () {
+		$UI.isFullScreen = Boolean(document.fullscreenElement);
+	});
 
-  function handleHotKeysOnContainer (event) {
-    if (!event.target.classList.contains("player-container")) return;
+	function handleHotKeysOnContainer (event) {
+		if (!event.target.classList.contains("player-container")) return;
 
-    (event.code === "ArrowRight") && time.rewindRight();
-    (event.code === "ArrowLeft")  && time.rewindLeft();
-    (event.code === "Space")      && paused.toggle();
-    (event.code === "ArrowUp")    && volume.increment();
-    (event.code === "ArrowDown")  && volume.decrement();
-  }
+		(event.code === "ArrowRight") && time.rewindRight();
+		(event.code === "ArrowLeft")  && time.rewindLeft();
+		(event.code === "Space")      && paused.toggle();
+		(event.code === "ArrowUp")    && volume.increment();
+		(event.code === "ArrowDown")  && volume.decrement();
+	}
+
+	onMount(async () => {
+		getFilesByStruct(getLocalSchema()).then(responseFiles => {
+			videos.save(responseFiles);
+		});
+	});
 </script>
 
 <style src="./styles/player.css"></style>

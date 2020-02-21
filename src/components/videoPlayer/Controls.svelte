@@ -2,7 +2,7 @@
 	<div class="controls-visible controls" class:controls-visible={$duration && $UI.showControls}>
 		<ul class="elements">
 			<li>
-				<Button transparent on:click={handlePreviousVideo} title="Предыдущее видео">
+				<Button transparent on:click={videos.previous} title="Предыдущее видео">
 					<Icon name="rewind" />
 				</Button>
 			</li>
@@ -12,7 +12,7 @@
 				</Button>
 			</li>
 			<li>
-				<Button transparent on:click={handleNextVideo} title="Следующее видео">
+				<Button transparent on:click={videos.next} title="Следующее видео">
 					<Icon name="fast-fw" />
 				</Button>
 			</li>
@@ -24,30 +24,13 @@
 
 		<ul class="elements">
 			<li class="time">{format($time)} / {format($duration)}</li>
-			<li class="sound progress-hack">
-				<input
-						on:input={e => volume.input(+e.target.value)}
-						value={$volume.value}
-						type="range"
-						min="0"
-						max="1"
-						style="--min: 0; --max: 1; --val: {$volume.value}"
-						step="any">
-				<button
-						on:click={volume.toggleVolume}
-						class="controls-sound button button-sound"
-						class:button-sound-disable={!$volume.value}
-						title="Изменить громкость"></button>
+			<li class="sound">
+				<Volume />
 			</li>
 			<li>
-				<button
-					on:click={UI.toggleFullScreen}
-					class="button button-fullScreen"
-					title={$UI.isFullScreen ? "Выйти из полноэкранного режима" : "Развернуть на весь экран"}>
-				</button>
-			</li>
-			<li>
-				<button class="button button-other" title="Дополнительные возможности"></button>
+				<Button transparent on:click={UI.toggleFullScreen} title={$UI.isFullScreen ? "Выйти из полноэкранного режима" : "Развернуть на весь экран"}>
+					<Icon name="resize-full-alt" />
+				</Button>
 			</li>
 		</ul>
 	</div>
@@ -57,6 +40,8 @@
 	import Button from "../../ui-elements/Button.svelte";
 	import Icon from "../../ui-elements/Icon.svelte";
 	import Progress from "./Progress.svelte";
+	import Volume from "./Volume.svelte";
+	import { videos } from "../../stores/videos";
 	import { time, paused, duration, volume, UI } from "../../stores/player";
 
 	function format (seconds) {
@@ -67,14 +52,6 @@
 		if (seconds < 10) seconds = '0' + seconds;
 
 		return `${minutes}:${seconds}`;
-	}
-
-	function handlePreviousVideo () {
-
-	}
-
-	function handleNextVideo () {
-
 	}
 </script>
 
