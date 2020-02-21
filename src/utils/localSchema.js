@@ -18,12 +18,12 @@ export function saveLocalSchema (schema) {
 export function mergeSchemes (serverSchema) {
 	const localSchema = getLocalSchema();
 
-	const getLocalVendor = vendor => localSchema.filter(v => v.vendor === vendor)[0];
+	const getLocalVendor = vendor => localSchema.filter(schema => schema.vendor === vendor)[0];
 	const getLocalBoard = (vendor, board) => {
 		const localVendor = getLocalVendor(vendor);
 		if (!localVendor) return false;
 
-		return localVendor.boards.filter(b => b.name === board)[0];
+		return localVendor.boards.filter(eachBoard => eachBoard.name === board)[0];
 	};
 
 	return serverSchema.map(schema => {
