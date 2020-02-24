@@ -17,6 +17,7 @@
 
 :global(body) {
 	--focused-color: cornflowerblue;
+	--focused-color-alpha: rgba(81, 140, 244, 0.3);
 
 	--main-background: #fafafa;
 	--main-background-dark: #343434;
