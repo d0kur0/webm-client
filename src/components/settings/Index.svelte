@@ -5,6 +5,7 @@
 
 	<ModalWindow open="{modalWindowState}" on:close="{handleModalWindowClose}">
 		<Container>
+			<Margin top="30px" />
 			<Heading size="2">Настройка схемы граббера</Heading>
 
 			{#if schema}
@@ -29,6 +30,7 @@
 	import ModalWindow from "../../ui-elements/ModalWindow.svelte";
 	import Container from "../../ui-elements/Container.svelte";
 	import Heading from "../../ui-elements/Heading.svelte";
+	import Margin from "../../ui-elements/Margin.svelte";
 
 	import Vendor from "./Vendor.svelte";
 	import { onMount } from "svelte";
@@ -55,12 +57,23 @@
 			getFilesByStruct(getLocalSchema())
 					.then(responseFiles => {
 						videos.save(responseFiles);
+
+
 						document.dispatchEvent(new CustomEvent("alertCancel", {
 							detail: {
-								newMessage: "Файлы успешно обновлены",
+								newMmessage: "Файлы успешно обновлены",
 								uniqueName: "afterUpdateSchema"
 							}
-						}))
+						}));
+
+						if (!responseFiles.length) {
+							document.dispatchEvent(new CustomEvent("alert", {
+								detail: {
+									message: "Кажется файлов нет, попробуй изменить схему в настройках",
+									uniqueName: "filesIsEmpty"
+								}
+							}));
+						}
 					})
 					.catch(error => {
 						document.dispatchEvent(new Event("globalError"));

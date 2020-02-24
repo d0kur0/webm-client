@@ -12,7 +12,7 @@
 <style>
 	.alert {
 		border-radius: 4px;
-		background-color: rgba(21, 244, 69, 0.68);
+		background-color: rgb(15, 167, 103);
 		color: #164221;
 		padding: 10px 20px;
 	}

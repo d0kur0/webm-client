@@ -14,7 +14,7 @@
 				max="1"
 				value="{$duration ? $volume.value : 0}"
 				style="--min: 0; --max: 1; --val: {$duration ? $volume.value : 0}"
-				step="any">
+				step="0.1">
 	</div>
 </template>
 

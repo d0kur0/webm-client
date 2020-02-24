@@ -23,7 +23,7 @@
 						bind:duration="{$duration}"
 						bind:currentTime="{$time}"
 						on:playing="{() => loading = false}"
-						on:error="{videos.next}"
+						on:error="{videos.catchError}"
 						on:ended="{videos.next}"
 						on:waiting="{() => loading = true}"
 						on:loadstart="{() => loading = true}"
@@ -73,7 +73,18 @@
 
 	onMount(() => {
 		getFilesByStruct(getLocalSchema())
-			.then(responseFiles => videos.save(responseFiles))
+			.then(responseFiles => {
+				videos.save(responseFiles);
+
+				if (!responseFiles.length) {
+					document.dispatchEvent(new CustomEvent("alert", {
+						detail: {
+							message: "Кажется файлов нет, попробуй изменить схему в настройках",
+							uniqueName: "filesIsEmpty"
+						}
+					}));
+				}
+			})
 			.catch(() => document.dispatchEvent(new Event("globalError")));
 	});
 </script>

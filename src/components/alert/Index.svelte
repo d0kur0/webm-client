@@ -14,6 +14,14 @@
 		right: 20px;
 		z-index: 50;
 	}
+
+	@media (max-width: 1024px) {
+		.alerts {
+			width: 100%;
+			right: 0;
+			padding: 0 15px;
+		}
+	}
 </style>
 
 <script>

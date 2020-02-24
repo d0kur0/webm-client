@@ -40,6 +40,12 @@ function createVideosStore() {
 
 				return store;
 			});
+		},
+		catchError () {
+			update(store => {
+				store.files = store.files.splice(store.index - 1, 1);
+				return store;
+			});
 		}
 	};
 }
