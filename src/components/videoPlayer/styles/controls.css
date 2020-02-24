@@ -7,6 +7,7 @@
   height: 0;
   overflow: hidden;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .controls-visible {
@@ -20,6 +21,18 @@
   color: #fff !important;
 }
 
+:global(.controls button) {
+  border-radius: 50%;
+  padding: 0 !important;
+  height: 32px;
+  width: 32px;
+  border: none !important;
+}
+
+:global(.controls button:focus) {
+  background-color: var(--focused-color-alpha);
+}
+
 .controls-progress {
   padding: 0 15px;
   display: flex;
@@ -27,11 +40,8 @@
   align-items: center;
 }
 
-.controls-progress > div {
-  width: 100%;
-}
-
 .elements {
+  margin: 0;
   padding: 0;
   display: flex;
   align-items: center;

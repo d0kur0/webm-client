@@ -1,25 +1,25 @@
 <template>
-	<div class="controls-visible controls" class:controls-visible={$duration && $UI.showControls}>
+	<div bind:this={$UI.controlsContainer} class="controls-visible controls" class:controls-visible={$UI.showControls}>
 		<ul class="elements">
 			<li>
-				<Button transparent on:click={videos.previous} title="Предыдущее видео">
-					<Icon name="rewind" />
-				</Button>
-			</li>
-			<li>
-				<Button transparent on:click="{paused.toggle}" title="{$paused ? `Начать просмотр` : `Поставить на паузу`}">
+				<Button disabled="{!$duration}" transparent on:click="{paused.toggle}" title="{$paused ? `Начать просмотр` : `Поставить на паузу`}">
 					<Icon name="{$paused ? `play` : `pause`}" />
 				</Button>
 			</li>
 			<li>
-				<Button transparent on:click={videos.next} title="Следующее видео">
+				<Button disabled="{!$duration}" transparent on:click={videos.previous} title="Предыдущее видео">
+					<Icon name="rewind" />
+				</Button>
+			</li>
+			<li>
+				<Button disabled="{!$duration}" transparent on:click={videos.next} title="Следующее видео">
 					<Icon name="fast-fw" />
 				</Button>
 			</li>
 		</ul>
 
 		<div class="controls-progress">
-			<Progress  />
+			<Progress />
 		</div>
 
 		<ul class="elements">
@@ -28,7 +28,7 @@
 				<Volume />
 			</li>
 			<li>
-				<Button transparent on:click={UI.toggleFullScreen} title={$UI.isFullScreen ? "Выйти из полноэкранного режима" : "Развернуть на весь экран"}>
+				<Button disabled="{!$duration}" transparent on:click={UI.toggleFullScreen} title={$UI.isFullScreen ? "Выйти из полноэкранного режима" : "Развернуть на весь экран"}>
 					<Icon name="resize-full-alt" />
 				</Button>
 			</li>
