@@ -32,8 +32,9 @@
 
 	import Vendor from "./Vendor.svelte";
 	import { onMount } from "svelte";
-	import { getSchema } from "../../api";
+	import { getSchema, getFilesByStruct } from "../../api";
 	import { getLocalSchema, saveLocalSchema, mergeSchemes } from "../../utils/localSchema";
+	import { videos } from "../../stores/videos";
 
 	let modalWindowState = false;
 	let needUpdate = false;
@@ -41,6 +42,31 @@
 
 	function handleModalWindowClose () {
 		modalWindowState = false;
+
+		if (needUpdate) {
+			document.dispatchEvent(new CustomEvent("alert", {
+				detail: {
+					message: "Обновление списка файлов...",
+					uniqueName: "afterUpdateSchema",
+					isNeedCancel: true
+				}
+			}));
+
+			getFilesByStruct(getLocalSchema())
+					.then(responseFiles => {
+						videos.save(responseFiles);
+						document.dispatchEvent(new CustomEvent("alertCancel", {
+							detail: {
+								newMessage: "Файлы успешно обновлены",
+								uniqueName: "afterUpdateSchema"
+							}
+						}))
+					})
+					.catch(error => {
+						document.dispatchEvent(new Event("globalError"));
+						console.log(error);
+					});
+		}
 	}
 
 	function handleToggleVendor (event) {
