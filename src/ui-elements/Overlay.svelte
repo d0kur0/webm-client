@@ -1,12 +1,12 @@
-<script>
-
-</script>
-
 <template>
-	<div class="overlay">
+	<div class="overlay" style="--opacity: {opacity}">
 		<slot/>
 	</div>
 </template>
+
+<script>
+	export let opacity = 1;
+</script>
 
 <style>
 	.overlay {
@@ -18,5 +18,6 @@
 		width: 100vw;
 		min-height: 100vh;
 		background-color: var(--main-background);
+		opacity: var(--opacity);
 	}
 </style>
