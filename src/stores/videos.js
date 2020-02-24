@@ -13,6 +13,8 @@ function createVideosStore() {
 		set,
 		save (videos) {
 			update(store => {
+				if (!videos) return store;
+
 				store.files = videos;
 				store.currentVideo = store.files[store.index];
 
