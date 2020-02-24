@@ -16,6 +16,7 @@ export function saveLocalSchema (schema) {
 }
 
 export function mergeSchemes (serverSchema) {
+	if (!serverSchema) return;
 	const localSchema = getLocalSchema();
 
 	const getLocalVendor = vendor => localSchema.filter(schema => schema.vendor === vendor)[0];
