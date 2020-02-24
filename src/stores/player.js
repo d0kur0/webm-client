@@ -30,7 +30,7 @@ function createDurationStore() {
 
 function createVolumeStore () {
 	const { subscribe, set, update } = writable({
-		value: localStorage.volume || 0.5,
+		value: localStorage.volume || "0.5",
 		isDisabled: false
 	});
 
@@ -81,6 +81,9 @@ function createPausedStore () {
 }
 
 function createUIStore () {
+	let [ MouseX, MouseY ] = [0, 0];
+	document.addEventListener("mousemove", event => [ MouseX, MouseY ] = [ event.screenX, event.screenY ]);
+
 	const { subscribe, set, update } = writable({
 		isWide: false,
 		isFullScreen: false,
@@ -88,7 +91,8 @@ function createUIStore () {
 		showControlsTimeout: undefined,
 		showControls: false,
 
-		playerContainer: undefined
+		playerContainer: undefined,
+		controlsContainer: undefined
 	});
 
 	return {
@@ -112,13 +116,26 @@ function createUIStore () {
 		},
 		toggleControls() {
 			update(function (store) {
-				clearTimeout(store.showControlsTimeout);
-				store.showControlsTimeout = setTimeout(() => {
+				const timeoutHandler = () => {
+					const rects = store.controlsContainer && store.controlsContainer.getBoundingClientRect();
+					if (!rects) return;
+
+					const isMouseOnControls = (MouseX >= rects.x && MouseX <= rects.x + rects.width) &&
+						(MouseY >= rects.y && MouseY >= rects.y + rects.height);
+
+					if (isMouseOnControls) {
+						store.showControlsTimeout = setTimeout(timeoutHandler, 2500);
+						return;
+					}
+
 					update(function (store) {
 						store.showControls = false;
 						return store;
 					});
-				}, 2500);
+				};
+
+				clearTimeout(store.showControlsTimeout);
+				store.showControlsTimeout = setTimeout(timeoutHandler, 2500);
 				store.showControls = true;
 
 				return store;
