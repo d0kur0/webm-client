@@ -7,7 +7,14 @@
 	import Button from "../../ui-elements/Button.svelte";
 
 	let isNight = localStorage.isNightTheme !== undefined;
-	if (isNight) document.body.classList.add('dark-theme');
+
+	isNight
+		&& document.body.classList.add('dark-theme');
+
+	!isNight
+		&& window.matchMedia("(prefers-color-scheme: dark)").matches
+		&& document.body.classList.add('dark-theme');
+
 
 	let timeout;
 
