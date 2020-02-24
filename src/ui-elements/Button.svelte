@@ -3,10 +3,11 @@
 	export let transparent = false;
 	export let ariaLabel = "";
 	export let title = "";
+	export let disabled = false;
 </script>
 
 <template>
-	<button {title} aria-label="{ariaLabel}" class:rounded class:transparent on:click on:focus><slot/></button>
+	<button {disabled} {title} aria-label="{ariaLabel}" class:rounded class:transparent on:click on:focus><slot/></button>
 </template>
 
 <style>
