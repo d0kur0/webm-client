@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<title>Webm client</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" href="icons/css/fontello.css">
+		<link rel="stylesheet" href="index.css">
+		<script>
+			function setEvent (event, selector, callback) {
+				document.addEventListener(event, function (event) {
+					const element = event.target.closest(selector);
+					if (!element) return;
+
+					callback.call(element);
+				});
+			}
+
+			setEvent("click", "ul > li:nth-child(3) > button", function () {
+				const container = document.querySelector(".video-container");
+				container.classList.toggle("video-container-wide");
+			});
+		</script>
+	</head>
+	<body>
+		<header class="header">
+			<ul class="header-list">
+				<!-- Settings button -->
+				<li class="hidden-on-mobile"><button class="button">Настройки</button></li>
+				<li class="visible-on-mobile"><button aria-label="Настройки" class="button button-circle"><span class="icon-settings"></span></button></li>
+
+				<!-- Wide screen button -->
+				<li class="hidden-on-tablet"><button class="button">Растянуть окно видео</button></li>
+			</ul>
+
+			<div class="header-spacer"></div>
+
+			<button class="button button-circle" aria-label="Включить темную тему">
+				<span class="icon-moon"></span>
+			</button>
+		</header>
+
+		<main class="video-player">
+			<div class="video-container" tabindex="0">
+				<video poster="https://avatars.mds.yandex.net/get-pdb/1707109/d539917c-ed06-496b-b0d8-fbee8eb0d06f/s1200" class="video" src="https://2ch.hk/b/src/214388142/15826653382840.webm"></video>
+			</div>
+		</main>
+	</body>
+</html>

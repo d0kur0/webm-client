@@ -1,0 +1,15 @@
+html {
+	--ancent-color: #3b3b3b;
+	--ancent-color-light: #555555;
+	--ancent-color-dark: #262626;
+
+	--main-color: #efefef;
+	--main-color-light: #ffffff;
+	--main-color-dark: #e0e0e0;
+
+	--focused-color: rgba(100, 157, 232, 0.69);
+}
+
+html.theme-dark {
+
+}

@@ -1,0 +1,32 @@
+.button {
+	font: inherit;
+	background-color: transparent;
+	cursor: pointer;
+	height: 2em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 3px solid transparent;
+	transition: 0.3s;
+	border-radius: 4px;
+}
+
+.button:hover {
+	background-color: var(--main-color-dark);
+}
+
+.button:active {
+	filter: contrast(90%);
+}
+
+.button:focus {
+	outline: none;
+	background-color: var(--main-color-dark);
+	border-color: var(--focused-color)
+}
+
+.button-circle {
+	height: 3em;
+	width: 3em;
+	border-radius: 50%;
+}

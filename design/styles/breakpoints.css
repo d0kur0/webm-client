@@ -1,0 +1,5 @@
+:root {
+	--mobile-screen-size: 640px;
+	--tablet-screen-size: 960px;
+	--desktop-screen-size: 1200px;
+}

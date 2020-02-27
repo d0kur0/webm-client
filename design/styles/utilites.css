@@ -1,0 +1,56 @@
+/*
+  Utils for hide
+ */
+.hidden-on-mobile {}
+@media (max-width: 640px) {
+	.hidden-on-mobile {
+		display: none;
+	}
+}
+
+.hidden-on-tablet {}
+@media (max-width: 960px) {
+	.hidden-on-tablet {
+		display: none;
+	}
+}
+
+.hidden-on-desktop {}
+@media (max-width: 1200px) {
+	.hidden-on-desktop {
+		display: none;
+	}
+}
+
+/*
+	Utils for visible
+ */
+.visible-on-mobile {
+	display: none;
+}
+
+@media (max-width: 640px) {
+	.visible-on-mobile {
+		display: block;
+	}
+}
+
+.visible-on-tablet {
+	display: none;
+}
+
+@media (max-width: 960px) {
+	.visible-on-tablet {
+		display: block;
+	}
+}
+
+.visible-on-desktop {
+	display: none;
+}
+
+@media (max-width: var(--desktop-screen-size)) {
+	.visible-on-desktop {
+		display: block;
+	}
+}
